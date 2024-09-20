@@ -10,7 +10,13 @@ export interface ITodoService {
     dueDate: Date
   ): Promise<Todo>;
   getTodoById(id: number, userId: number): Promise<Todo | null>;
-  getTodos(userId: number): Promise<Todo[]>;
+  findAll(userId: number): Promise<Todo[]>;
+  getTodos(
+    userId: number,
+    limit?: number,
+    offset?: number,
+    filter?: any
+  ): Promise<{ todos: Todo[]; filteredCount: number; count: number }>;
   updateTodo(
     id: number,
     userId: number,

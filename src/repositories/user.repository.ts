@@ -9,8 +9,6 @@ export class UserRepository implements IUserRepository {
     email: string;
     password: string;
   }): Promise<User> {
-    console.log("user", userData);
-
     return User.create(userData);
   }
 

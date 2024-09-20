@@ -18,7 +18,6 @@ export const authMiddleware = (
   }
   try {
     const decoded = jwt.verify(token, "secret") as { userId: number };
-    console.log("decoded", decoded);
     req.body.userId = decoded.userId;
     next();
   } catch (error) {

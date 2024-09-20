@@ -34,8 +34,28 @@ export class TodoService implements ITodoService {
     return await this.todoRepository.findById(id, userId);
   }
 
-  async getTodos(userId: number): Promise<Todo[]> {
+  async findAll(userId: number): Promise<Todo[]> {
     return await this.todoRepository.findAll(userId);
+  }
+
+  async getTodos(
+    userId: number,
+    limit?: number,
+    offset?: number,
+    filter?: any
+  ): Promise<{ todos: Todo[]; filteredCount: number; count: number }> {
+    const totalTodos = await this.todoRepository.getTotalCount(userId);
+    const filteredTodos = await this.todoRepository.getTodos(
+      userId,
+      limit,
+      offset,
+      filter
+    );
+    return {
+      todos: filteredTodos.todos,
+      filteredCount: filteredTodos.count,
+      count: totalTodos,
+    };
   }
 
   async updateTodo(

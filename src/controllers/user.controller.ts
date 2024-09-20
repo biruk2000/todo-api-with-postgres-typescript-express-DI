@@ -5,7 +5,6 @@ import { IUserService } from "../interfaces/IUserService";
 const userService = container.get<IUserService>(Symbol.for("IUserService"));
 export const register = async (req: Request, res: Response) => {
   try {
-    console.log("req body", req.body);
     const { username, email, password } = req.body;
     const user = await userService.register(username, email, password);
     res.status(201).json(user);

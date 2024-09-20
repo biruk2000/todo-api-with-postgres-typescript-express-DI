@@ -22,10 +22,25 @@ export const createTodo = async (req: Request, res: Response) => {
   }
 };
 
-export const getTodos = async (req: Request, res: Response) => {
+export const findAll = async (req: Request, res: Response) => {
   try {
     const { userId } = req.body;
-    const todos = await todoService.getTodos(userId);
+    const todos = await todoService.findAll(userId);
+    res.status(200).json(todos);
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const getTodos = async (req: Request, res: Response) => {
+  try {
+    const { userId, limit, offset, filter } = req.body;
+    const todos = await todoService.getTodos(
+      userId,
+      limit && parseInt(limit),
+      offset && parseInt(offset),
+      filter
+    );
     res.status(200).json(todos);
   } catch (error: any) {
     res.status(400).json({ message: error.message });
@@ -47,7 +62,6 @@ export const updateTodo = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { userId, updates } = req.body;
-    console.log("req body", req.body);
     const todo = await todoService.updateTodo(Number(id), userId, updates);
     res.status(200).json(todo);
   } catch (error: any) {
