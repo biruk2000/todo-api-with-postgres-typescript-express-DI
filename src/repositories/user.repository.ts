@@ -15,4 +15,24 @@ export class UserRepository implements IUserRepository {
   async findOneByEmail(email: string): Promise<User | null> {
     return User.findOne({ where: { email } });
   }
+
+  async getUserById(userId: number): Promise<User | null> {
+    return User.findByPk(userId);
+  }
+
+  async updateProfilePicture(
+    userId: number,
+    imageUrl: string,
+    publicId: string
+  ): Promise<User | null> {
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return null;
+    }
+    user.profilePictureUrl = imageUrl;
+    user.profilePicturePublicId = publicId;
+    console.log("user", user);
+    await user.save();
+    return user;
+  }
 }

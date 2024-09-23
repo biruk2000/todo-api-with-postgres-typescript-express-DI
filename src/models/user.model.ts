@@ -6,6 +6,8 @@ export class User extends Model {
   public username!: string;
   public email!: string;
   public password!: string;
+  public profilePictureUrl!: string | null;
+  public profilePicturePublicId!: string | null;
 }
 
 User.init(
@@ -27,6 +29,14 @@ User.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    profilePictureUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    profilePicturePublicId: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {

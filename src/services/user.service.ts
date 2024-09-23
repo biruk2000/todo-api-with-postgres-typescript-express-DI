@@ -37,7 +37,37 @@ export class UserService implements IUserService {
     if (!isPasswordValid) {
       throw new Error("Invalid password");
     }
-    const token = jwt.sign({ userId: user.id }, "secret", { expiresIn: "1h" });
+
+    const token = jwt.sign(
+      { userId: user.id },
+      process.env.JWT_SECRET as string,
+      { expiresIn: "1h" }
+    );
     return { token, user };
+  }
+
+  async getUserById(userId: number): Promise<User> {
+    const user = await this.userRepository.getUserById(userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return user;
+  }
+
+  async updateProfilePicture(
+    userId: number,
+    imageUrl: string,
+    publicId: string
+  ): Promise<User> {
+    // console.log("userId", userId, "imageUrl", imageUrl);
+    const updatedUser = await this.userRepository.updateProfilePicture(
+      userId,
+      imageUrl,
+      publicId
+    );
+    if (!updatedUser) {
+      throw new Error("User not found");
+    }
+    return updatedUser;
   }
 }

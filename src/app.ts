@@ -3,10 +3,12 @@ import express from "express";
 import bodyParser from "body-parser";
 import userRoutes from "./routes/user.routes";
 import todoRoutes from "./routes/todo.routes";
+import dotenv from "dotenv";
 // Initialize the Express app
 const app = express();
 
 // Middleware
+dotenv.config();
 app.use(bodyParser.json()); // Parse JSON bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
