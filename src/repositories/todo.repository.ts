@@ -1,6 +1,7 @@
 import { injectable } from "inversify";
 import { ITodoRepository } from "../interfaces/ITodoRepository";
 import { Todo } from "../models/todo.model";
+import { User } from "../models/user.model";
 import { convertFilterOperators } from "../utils/filterConverter";
 @injectable()
 export class TodoRepository implements ITodoRepository {
@@ -9,7 +10,7 @@ export class TodoRepository implements ITodoRepository {
   }
 
   async findById(id: number, userId: number): Promise<Todo | null> {
-    return await Todo.findOne({ where: { id, userId } });
+    return await Todo.findOne({ where: { id, userId }, include: User });
   }
 
   async findAll(userId: number): Promise<Todo[]> {

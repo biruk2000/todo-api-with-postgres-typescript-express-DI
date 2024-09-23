@@ -64,7 +64,12 @@ Todo.init(
   }
 );
 
-Todo.belongsTo(User, { foreignKey: "userId" });
+Todo.belongsTo(User, {
+  foreignKey: {
+    allowNull: false,
+    name: "userId",
+  },
+});
 User.hasMany(Todo, { foreignKey: "userId" });
 
 export default Todo;
